@@ -1,0 +1,93 @@
+# ===================================================================
+# Spring Boot配置.
+#
+# 本配置会被你将要使用的Spring profile覆盖，例如如果你使用"dev" profile，那么本文配置将被application-dev.yml中的配置覆盖。
+# ===================================================================
+# ===================================================================
+# 标准的Spring Boot属性.
+# 完整参考资料可在以下地址查阅:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+server:
+  port: 81
+  tomcat:
+    uri-encoding: UTF-8
+
+
+# ====================================================================
+# log config
+# ====================================================================
+logging:
+  level:
+    com.example: debug
+    root: info
+  path: /Users/xu/logs
+  config: classpath:logback/logback-config.xml
+
+# ====================================================================
+# mybatis config
+# ====================================================================
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+
+# ====================================================================
+# database config
+# ====================================================================
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://www.xujingya.xyz:3306/demo?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 连接池的补充配置 应用到上面到数据源中
+    druid:
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000  # 获取连接等待超时的时间
+      time-between-eviction-runs-millis: 60000 # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 30000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+  # ====================================================================
+  # redis config
+  # ====================================================================
+  redis:
+    database: 0 # redis数据库索引(默认是0)
+    host: www.xujingya.xyz
+    port: 6379
+    password: dingdong
+    jedis:
+      pool:
+        max-active: 100 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: 1000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 40 # 连接池中的最大空闲连接
+        min-idle: 0 # 连接池中的最小空闲连接
+    timeout: 1000 # 连接超时时间（毫秒）
+
+  # ====================================================================
+  # freemarker config
+  # ====================================================================
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .html
+    content-type: text/html
+    enabled: true
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+
+  # ====================================================================
+  # charset config
+  # ====================================================================
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
