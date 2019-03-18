@@ -1,9 +1,0 @@
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/interceptor/MyInterceptor.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/config/SwaggerConfig.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/aop/TransactionAdviceConfig.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/constants/HttpConstants.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/constants/ExceptionConstants.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/config/InterceptorConfig.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/httpclient/HttpClientUtil.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/config/RedisConfig.java
-/Users/xu/Project/demo/demo-common/src/main/java/com/aladen/common/constants/Constants.java
