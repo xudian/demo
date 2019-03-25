@@ -5,7 +5,7 @@
     <parent>
         <artifactId>demo</artifactId>
         <groupId>com.aladen</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <com.aladen.version>1.0-SNAPSHOT</com.aladen.version>
+        <com.aladen.version>1.0.0</com.aladen.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -31,11 +31,6 @@
             <groupId>com.aladen</groupId>
             <artifactId>demo-service</artifactId>
             <version>${com.aladen.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
     </dependencies>
