@@ -1,13 +1,13 @@
 package com.aladen.service;
 
 import com.aladen.DemoApplicationTests;
-import com.aladen.entity.sys.UserInfoDO;
-import com.aladen.service.sys.UserInfoService;
+import com.aladen.entity.user.SysUserInfo;
 import com.aladen.service.test.TestTransactionService;
+import com.aladen.service.user.ISysUserInfoService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Title: UserInfoServiceTest
@@ -19,21 +19,23 @@ import java.util.Date;
  */
 public class UserInfoServiceTest extends DemoApplicationTests {
 
-    @Autowired
-    private UserInfoService userService;
 
     @Autowired
     private TestTransactionService transService;
 
+    @Autowired
+    private ISysUserInfoService userInfoService;
+
     @Test
     public void testSave(){
-        UserInfoDO userInfo = new UserInfoDO();
-        userInfo.setUserName("test123");
+        SysUserInfo userInfo = new SysUserInfo();
+        userInfo.setUserName("test0325");
         userInfo.setTrueName("测试事物1232");
         userInfo.setPassword("123456");
-        userInfo.setCreateTime(new Date());
+        userInfo.setCreateTime(LocalDateTime.now());
         userInfo.setUserStatus("0");
-        userService.saveEntity(userInfo);
+//        userService.saveEntity(userInfo);
+        userInfoService.save(userInfo);
     }
 
     @Test

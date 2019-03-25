@@ -37,8 +37,11 @@ logging:
 # ====================================================================
 # mybatis config
 # ====================================================================
-mybatis:
+# mybatis:
+#  mapper-locations: classpath:mapper/**/*.xml
+mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.aladen.entity
 
 # ====================================================================
 # database config
