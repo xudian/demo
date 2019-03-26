@@ -2,7 +2,6 @@ package com.aladen.service;
 
 import com.aladen.DemoApplicationTests;
 import com.aladen.service.redis.RedisService;
-import com.aladen.service.test.TestRedisCache;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +19,6 @@ public class RedisServiceTest extends DemoApplicationTests {
 
     @Autowired
     private RedisService redisService;
-    @Autowired
-    private TestRedisCache testRedisCache;
 
     @Test
     public void testRedis(){
@@ -53,14 +50,4 @@ public class RedisServiceTest extends DemoApplicationTests {
         redisService.incrby("proA",-1);
     }
 
-    @Test
-    public void testHyperLogLog(){
-//        testRedisCache.testSkipe("1","proA");
-        testRedisCache.threadRun();
-        try {
-            Thread.sleep(120000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

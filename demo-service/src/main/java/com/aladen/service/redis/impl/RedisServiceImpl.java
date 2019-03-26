@@ -1,6 +1,5 @@
 package com.aladen.service.redis.impl;
 
-import com.aladen.service.base.BaseService;
 import com.aladen.service.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @Copyright 2018 All Rights Reserved
  */
 @Service
-public class RedisServiceImpl extends BaseService implements RedisService {
+public class RedisServiceImpl implements RedisService {
 
     @Autowired
     private RedisTemplate redisTemplate;

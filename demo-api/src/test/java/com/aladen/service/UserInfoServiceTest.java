@@ -2,7 +2,6 @@ package com.aladen.service;
 
 import com.aladen.DemoApplicationTests;
 import com.aladen.entity.user.SysUserInfo;
-import com.aladen.service.test.TestTransactionService;
 import com.aladen.service.user.ISysUserInfoService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import java.time.LocalDateTime;
 public class UserInfoServiceTest extends DemoApplicationTests {
 
 
-    @Autowired
-    private TestTransactionService transService;
 
     @Autowired
     private ISysUserInfoService userInfoService;
@@ -38,14 +35,4 @@ public class UserInfoServiceTest extends DemoApplicationTests {
         userInfoService.save(userInfo);
     }
 
-    @Test
-    public void testTrans(){
-        transService.testTrans("ma",108);
-    }
-
-    @Test
-    public void testUSerAdd(){
-        String[] names = {"zhangsan","lisi","wangwu"};
-        transService.listUser(names);
-    }
 }

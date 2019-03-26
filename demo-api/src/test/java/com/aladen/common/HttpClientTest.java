@@ -2,7 +2,6 @@ package com.aladen.common;
 
 import com.aladen.base.BaseTest;
 import com.aladen.common.httpclient.HttpClientUtil;
-import com.aladen.entity.sys.UserInfoDO;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -39,13 +38,4 @@ public class HttpClientTest extends BaseTest {
         logger.info("jsonResult:{}",jsonResult);
     }
 
-
-    @Test
-    public void testEquals() {
-        UserInfoDO user1 = new UserInfoDO();
-        user1.setUserName("123");
-        UserInfoDO user2 = new UserInfoDO();
-        user2.setUserName("123");
-        logger.info("userInfo:{}",user1.equals(user2));
-    }
 }
