@@ -1,6 +1,6 @@
 package com.aladen.api;
 
-import com.aladen.api.base.BaseApiService;
+import com.aladen.service.api.base.BaseApiService;
 import com.aladen.base.BaseController;
 import com.aladen.common.enumconstants.RespCodeEnum;
 import com.aladen.common.exception.BusiException;
@@ -63,6 +63,7 @@ public class ApiController extends BaseController {
 
     @RequestMapping(value ="{ifn}")
     @CrossOrigin(origins = "*")
+    @ResponseBody
     public JSONObject execute(@PathVariable String ifn, HttpServletRequest request) {
         JSONObject result = new JSONObject();
         logger.info("==============调用接口:{} start============================",ifn);
@@ -87,10 +88,10 @@ public class ApiController extends BaseController {
                 }
                 result = ResponseModel.retSuccess(RespCodeEnum.SUCCESS,baseApiService.doBusiness(request,signFlag));
             } catch (NoSuchBeanDefinitionException bde) {
-                logger.error("调用接口异常;ifn:{};e:{}",ifn,bde.getMessage());
+                logger.error("调用接口异常,接口不存在;ifn:{};e:{}",ifn,bde.getMessage());
                 result = ResponseModel.retFail(RespCodeEnum.NOBEAN_ERROR);
             } catch (BusiException be) {
-                logger.error("调用接口异常;ifn:{};e:{}",ifn,be.getMsg());
+                logger.error("调用接口异常,业务逻辑抛出异常;ifn:{};e:{}",ifn,be.getMsg());
                 String code = be.getCode();
                 if (StringUtils.isBlank(be.getCode())) {
                     code = RespCodeEnum.SERVER_ERROR.getCode();

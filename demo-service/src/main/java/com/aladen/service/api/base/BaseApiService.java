@@ -1,4 +1,4 @@
-package com.aladen.api.base;
+package com.aladen.service.api.base;
 
 import com.aladen.common.enumconstants.RespCodeEnum;
 import com.aladen.common.exception.BusiException;
