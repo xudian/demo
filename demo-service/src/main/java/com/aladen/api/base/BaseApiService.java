@@ -1,5 +1,7 @@
 package com.aladen.api.base;
 
+import com.aladen.common.enumconstants.RespCodeEnum;
+import com.aladen.common.exception.BusiException;
 import com.aladen.common.util.SignUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +44,7 @@ public abstract class BaseApiService {
      * @date: 2019/3/26 14:48
      */
     public JSONObject doBusiness(HttpServletRequest request,Boolean isSignOpen) {
-        JSONObject result = null;
+        JSONObject result;
         if (isSignOpen) {
             isSignOpen = checkSign(request);
         } else {
@@ -51,7 +53,7 @@ public abstract class BaseApiService {
         if (isSignOpen) {
             result = execute(request);
         } else {
-
+            throw new BusiException(RespCodeEnum.SIGN_ERROR.getCode(),RespCodeEnum.SIGN_ERROR.getViewMsg());
         }
         return result;
     }

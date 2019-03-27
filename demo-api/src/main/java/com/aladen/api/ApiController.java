@@ -2,12 +2,15 @@ package com.aladen.api;
 
 import com.aladen.api.base.BaseApiService;
 import com.aladen.base.BaseController;
+import com.aladen.common.enumconstants.RespCodeEnum;
+import com.aladen.common.exception.BusiException;
 import com.aladen.common.helper.SpringContextHolder;
 import com.aladen.common.properties.ApiProperties;
+import com.aladen.common.util.ResponseModel;
 import com.aladen.service.redis.RedisService;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,12 +85,24 @@ public class ApiController extends BaseController {
                 if (isSignAllow(ifn) || !apiProperties.isSignOpen()) {
                     signFlag = Boolean.FALSE;
                 }
-                result = baseApiService.doBusiness(request,signFlag);
+                result = ResponseModel.retSuccess(RespCodeEnum.SUCCESS,baseApiService.doBusiness(request,signFlag));
+            } catch (NoSuchBeanDefinitionException bde) {
+                logger.error("调用接口异常;ifn:{};e:{}",ifn,bde.getMessage());
+                result = ResponseModel.retFail(RespCodeEnum.NOBEAN_ERROR);
+            } catch (BusiException be) {
+                logger.error("调用接口异常;ifn:{};e:{}",ifn,be.getMsg());
+                String code = be.getCode();
+                if (StringUtils.isBlank(be.getCode())) {
+                    code = RespCodeEnum.SERVER_ERROR.getCode();
+                }
+                result = ResponseModel.retFail(code,be.getMsg());
             } catch (Exception e) {
-                logger.error("调用接口异常;ifn:{};e:{}",ifn,e);
+                logger.error("调用接口异常;ifn:{};e:{}",ifn,e.getMessage());
+                result = ResponseModel.retFail(RespCodeEnum.SERVER_ERROR);
             }
         } else {
             logger.error("接口token校验不通过;ifn:{}",ifn);
+            result = ResponseModel.retFail(RespCodeEnum.TOKEN_ERROR);
         }
         logger.info("调用接口:{},返回结果:{}",ifn,result);
         logger.info("==============调用接口:{} end============================",ifn);

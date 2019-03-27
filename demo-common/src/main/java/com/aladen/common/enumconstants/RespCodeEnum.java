@@ -1,4 +1,4 @@
-package com.aladen.common.exception;
+package com.aladen.common.enumconstants;
 
 /**
  * @Title: RespCodeEnum
@@ -8,10 +8,12 @@ package com.aladen.common.exception;
  * @Version V1.0
  * @Copyright 2019 All Rights Reserved
  */
-public enum RespCodeEnum implements CommonExceptionEnum {
+public enum RespCodeEnum  {
     SUCCESS("0000","操作成功"),
     SIGN_ERROR("1001","签名异常"),
-    SERVER_ERROR("1002","系统异常");
+    SERVER_ERROR("1002","系统异常"),
+    NOBEAN_ERROR("1003","无此接口"),
+    TOKEN_ERROR("1004","token异常");
 
     private String code;
     private String viewMsg;
@@ -21,13 +23,11 @@ public enum RespCodeEnum implements CommonExceptionEnum {
         this.viewMsg = viewMsg;
     }
 
-    @Override
     public String getCode() {
         return code;
     }
 
 
-    @Override
     public String getViewMsg() {
         return viewMsg;
     }

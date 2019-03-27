@@ -1,6 +1,8 @@
 package com.aladen.api.user;
 
 import com.aladen.api.base.BaseApiService;
+import com.aladen.common.enumconstants.RespCodeEnum;
+import com.aladen.common.exception.BusiException;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class UserApiImpl extends BaseApiService {
     public JSONObject execute(HttpServletRequest request) {
         JSONObject result = new JSONObject();
         logger.info("进入方法;");
+        if (2 > 1) {
+            throw new BusiException(RespCodeEnum.SIGN_ERROR.getViewMsg());
+        }
         return result;
     }
 }
