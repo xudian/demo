@@ -1,6 +1,15 @@
 package com.aladen.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * @Title: IPUtil
@@ -11,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Copyright 2018 All Rights Reserved
  */
 public class IPUtil {
+    private static Logger logger = LoggerFactory.getLogger(IPUtil.class);
 
 
     public static String getRemoteIP(HttpServletRequest request) {
@@ -38,6 +48,54 @@ public class IPUtil {
             }
         }
         return ip;
+    }
+
+    /**
+     * 获取本机IP，获取所有
+     *
+     * @return
+     */
+    public static List<String> getAllIPs() {
+        List<String> list = new ArrayList<>();
+        try {
+            if (isWindowsOS()) {
+                list.add(InetAddress.getLocalHost().getHostAddress());
+            } else {
+                for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                    NetworkInterface networkInterface = en.nextElement();
+                    String name = networkInterface.getName();
+                    if (!name.contains("docker") && !name.contains("lo")) {
+                        for (Enumeration<InetAddress> enumIpAddr = networkInterface.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                            InetAddress inetAddress = enumIpAddr.nextElement();
+                            if (!inetAddress.isLoopbackAddress()) {
+                                String ipaddress = inetAddress.getHostAddress();
+                                if (inetAddress instanceof Inet4Address && !ipaddress.contains("::") && !ipaddress.contains("0:0:") && !ipaddress.contains("fe80")) {
+                                    list.add(ipaddress);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.warn("获取本地ip失败");
+        }
+        logger.info("获取本地ip成功,{}", list);
+        return list;
+    }
+
+    /**
+     * 判断操作系统是否是Windows
+     *
+     * @return
+     */
+    public static boolean isWindowsOS() {
+        boolean isWindowsOS = false;
+        String osName = System.getProperty("os.name");
+        if (osName.toLowerCase().contains("windows")) {
+            isWindowsOS = true;
+        }
+        return isWindowsOS;
     }
 
 

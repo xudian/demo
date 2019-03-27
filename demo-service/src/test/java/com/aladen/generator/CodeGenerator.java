@@ -18,8 +18,8 @@ public class CodeGenerator {
         String driverName = "com.mysql.cj.jdbc.Driver";
         String username = "root";
         String password = "root";
-        String packageName = "user";
-        String[]  tableNames = {"sys_user_info"};
+        String packageName = "sys";
+        String[]  tableNames = {"sys_task_config"};
 
         new Generator().generatorCode(baseDir,jdbcUrl,driverName,username,password,packageName,tableNames);
     }

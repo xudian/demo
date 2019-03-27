@@ -20,9 +20,9 @@ server:
 logging:
   config: classpath:logback/logback-config.xml
 
-# ====================================================================
-# charset config
-# ====================================================================
+  # ====================================================================
+  # charset config
+  # ====================================================================
   http:
     encoding:
       charset: UTF-8
@@ -97,7 +97,6 @@ spring:
 api:
   token-open: false # 是否进行token校验(true:需要;false:不需要)
   sign-open: false  # 是否进行sign校验(true:需要;false:不需要)
-
 
 
 
