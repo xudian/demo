@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @Title: WebConfig
- * @Description: TODO
+ * @Description:
  * @Author xu
  * @Date 2018/8/16 10:42
  * @Version 1.0

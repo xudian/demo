@@ -23,7 +23,7 @@ public class RedisServiceTest extends DemoApplicationTests {
     @Test
     public void testRedis(){
         String key = "proA";
-        String val = "20";
+        String val = "30";
         redisService.set(key,val);
         String value = (String) redisService.get("proA");
         logger.info("-----------------value:{}", value);

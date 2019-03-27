@@ -14,9 +14,12 @@ import java.util.Map;
  * @Version 1.0
  * @Copyright 2018 All Rights Reserved
  */
-public class BaseController {
+public abstract class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    protected static final String TOKEN_KEY = "token:";
+    protected static final String USER_KEY = "token:";
 
     protected void  printParams(HttpServletRequest request){
         Map<String, String[]> map = request.getParameterMap();
@@ -34,4 +37,6 @@ public class BaseController {
             logger.info(log+logValue);
         }
     }
+
+    protected abstract boolean checkToken(HttpServletRequest request);
 }
