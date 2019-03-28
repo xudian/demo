@@ -1,6 +1,5 @@
 package com.aladen.common.httpclient;
 
-import com.aladen.common.constants.HttpConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
@@ -23,6 +22,10 @@ public class HttpClientUtil {
 
     private static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
+    private static final int REQUEST_TIMEOUT = 10000;
+    private static final int CONNECTION_TIMEOUT = 20000;
+    private static final int READ_TIMEOUT = 20000;
+
     /**
      * @Description: 调用接口,传入的参数不是以键值对的方式获取
      * @params: [url, content]
@@ -41,7 +44,7 @@ public class HttpClientUtil {
         try {
             responseEntity = restTemplate.exchange(url, HttpMethod.POST,requestEntity,String.class);
             logger.info("调用接口:{};传入参数:{},返回状态码:{}",url,content,responseEntity.getStatusCodeValue());
-            if (responseEntity.getStatusCodeValue() == org.apache.http.HttpStatus.SC_OK){
+            if (responseEntity.getStatusCodeValue() == HttpStatus.OK.value()){
                 result = responseEntity.getBody();
             }
         } catch (Exception e) {
@@ -74,7 +77,7 @@ public class HttpClientUtil {
         try {
             ResponseEntity<String> response = restTemplate.postForEntity( url, request , String.class);
             logger.info("调用接口:{};传入参数:{},返回状态码:{}",url,map,response.getStatusCodeValue());
-            if (response.getStatusCodeValue() == org.apache.http.HttpStatus.SC_OK){
+            if (response.getStatusCodeValue() == HttpStatus.OK.value()){
                 result = response.getBody();
             }
         } catch (Exception e) {
@@ -96,7 +99,7 @@ public class HttpClientUtil {
         RestTemplate restTemplate = getRestTemplate();
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(url + "?" + content, String.class);
-            if (responseEntity.getStatusCodeValue() == org.apache.http.HttpStatus.SC_OK) {
+            if (responseEntity.getStatusCodeValue() == HttpStatus.OK.value()) {
                 result = responseEntity.getBody();
             }
         } catch (Exception e) {
@@ -111,9 +114,9 @@ public class HttpClientUtil {
     private static RestTemplate getRestTemplate(){
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         // 设置超时时间，请求时间、连接时间、读取时间
-        requestFactory.setConnectionRequestTimeout(HttpConstants.I_1000);
-        requestFactory.setConnectTimeout(HttpConstants.I_5000);
-        requestFactory.setReadTimeout(HttpConstants.I_5000);
+        requestFactory.setConnectionRequestTimeout(REQUEST_TIMEOUT);
+        requestFactory.setConnectTimeout(CONNECTION_TIMEOUT);
+        requestFactory.setReadTimeout(READ_TIMEOUT);
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         return restTemplate;
     }

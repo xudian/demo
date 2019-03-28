@@ -65,8 +65,8 @@ public class TaskConfig {
                         continue;
                     }
                     JobDetail jobDetail = JobBuilder.newJob(BaseJob.class).build();
-                    CronScheduleBuilder builder = CronScheduleBuilder.cronSchedule(taskConfig.getTimeCron());
-                    CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(taskConfig.getMethod(),taskConfig.getBeanRef()).withSchedule(builder).build();
+                    CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(taskConfig.getTimeCron());
+                    CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(taskConfig.getMethod(),taskConfig.getBeanRef()).withSchedule(cronScheduleBuilder).build();
                     try {
                         scheduler.scheduleJob(jobDetail,trigger);
                         logger.info("定时任务初始化完成; -> {}",taskConfig.getName());
