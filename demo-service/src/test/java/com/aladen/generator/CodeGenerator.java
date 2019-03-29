@@ -19,7 +19,7 @@ public class CodeGenerator {
         String username = "root";
         String password = "root";
         String packageName = "sys";
-        String[]  tableNames = {"sys_task_config"};
+        String[]  tableNames = {"sys_field_info"};
 
         new Generator().generatorCode(baseDir,jdbcUrl,driverName,username,password,packageName,tableNames);
     }

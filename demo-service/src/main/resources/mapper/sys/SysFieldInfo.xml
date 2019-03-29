@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aladen.mapper.sys.SysFieldInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.aladen.entity.sys.SysFieldInfo">
+        <id column="busi_id" property="busiId" />
+        <result column="field_name" property="fieldName" />
+        <result column="cn_name" property="cnName" />
+        <result column="field_value" property="fieldValue" />
+        <result column="field_desc" property="fieldDesc" />
+        <result column="field_order" property="fieldOrder" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        busi_id, field_name, cn_name, field_value, field_desc, field_order, remark
+    </sql>
+
+</mapper>
