@@ -1,9 +1,10 @@
 package com.aladen.service.api.user;
 
-import com.aladen.entity.user.SysUserInfo;
-import com.aladen.service.api.base.BaseApiService;
+import com.aladen.common.annotation.CheckParams;
 import com.aladen.common.enumconstants.RespCodeEnum;
 import com.aladen.common.exception.BusiException;
+import com.aladen.entity.user.SysUserInfo;
+import com.aladen.service.api.base.BaseApiService;
 import com.aladen.service.user.ISysUserInfoService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
  * @Copyright 2018 All Rights Reserved
  */
 @Service("userRegister")
+@CheckParams(value = {"name","age","idCard"})
 public class UserApiImpl extends BaseApiService {
 
     @Autowired

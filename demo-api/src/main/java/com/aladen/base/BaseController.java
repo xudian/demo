@@ -1,5 +1,6 @@
 package com.aladen.base;
 
+import com.aladen.service.api.base.BaseApiService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,4 +35,6 @@ public abstract class BaseController {
     }
 
     protected abstract boolean checkToken(HttpServletRequest request);
+
+    protected abstract boolean checkParams(String ifn, BaseApiService baseApiService,HttpServletRequest request);
 }

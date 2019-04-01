@@ -13,7 +13,8 @@ public enum RespCodeEnum  {
     SIGN_ERROR("1001","签名异常"),
     SERVER_ERROR("1002","系统异常"),
     NOBEAN_ERROR("1003","无此接口"),
-    TOKEN_ERROR("1004","token异常");
+    TOKEN_ERROR("1004","token异常"),
+    PARAMS_ERROR("1005","参数为空");
 
     private String code;
     private String viewMsg;

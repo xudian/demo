@@ -14,9 +14,9 @@ import org.springframework.context.annotation.DependsOn;
  */
 @SpringBootApplication
 @DependsOn(value = {"springContextHolder"})
-public class DemoApplication {
+public class ApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(ApiApplication.class, args);
     }
 }

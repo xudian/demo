@@ -26,12 +26,12 @@ public class FieldInfoServiceTest extends DemoApplicationTests {
 
     @Test
     public void testCache() {
-        /*logger.info("----------------第一次查询，没有缓存");
+        logger.info("----------------第一次查询，没有缓存");
         Map<String,String> map = service.getPropertys();
         logger.info("----------map:{}",map);
         logger.info("----------------第二次查询，有缓存");
         Map<String,String> map1 = service.getPropertys();
-        logger.info("----------map:{}",map);*/
+        logger.info("----------map:{}",map);
         logger.info("----------------引用缓存查询");
         String value = propertiesService.getProperty("order.status");
         logger.info("----------------value:{}",value);

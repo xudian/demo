@@ -1,12 +1,13 @@
 package com.aladen.api;
 
-import com.aladen.service.api.base.BaseApiService;
 import com.aladen.base.BaseController;
+import com.aladen.common.annotation.CheckParams;
 import com.aladen.common.enumconstants.RespCodeEnum;
 import com.aladen.common.exception.BusiException;
 import com.aladen.common.helper.SpringContextHolder;
 import com.aladen.common.properties.ApiProperties;
 import com.aladen.common.util.ResponseModel;
+import com.aladen.service.api.base.BaseApiService;
 import com.aladen.service.redis.RedisService;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -86,7 +89,14 @@ public class ApiController extends BaseController {
                 if (isSignAllow(ifn) || !apiProperties.isSignOpen()) {
                     signFlag = Boolean.FALSE;
                 }
-                result = ResponseModel.retSuccess(RespCodeEnum.SUCCESS,baseApiService.doBusiness(request,signFlag));
+                // 注解参数校验
+                boolean paramsFlag = checkParams(ifn,baseApiService,request);
+
+                if (!paramsFlag) {
+                    result = ResponseModel.retFail(RespCodeEnum.PARAMS_ERROR);
+                } else {
+                    result = ResponseModel.retSuccess(RespCodeEnum.SUCCESS,baseApiService.doBusiness(request,signFlag));
+                }
             } catch (NoSuchBeanDefinitionException bde) {
                 logger.error("调用接口异常,接口不存在;ifn:{};e:{}",ifn,bde.getMessage());
                 result = ResponseModel.retFail(RespCodeEnum.NOBEAN_ERROR);
@@ -139,6 +149,30 @@ public class ApiController extends BaseController {
             if (StringUtils.equals(token,tokenValue)) {
                 result = Boolean.TRUE;
             }
+        }
+        return result;
+    }
+
+    @Override
+    protected boolean checkParams(String ifn,BaseApiService baseApiService,HttpServletRequest request) {
+        boolean result = true;
+        CheckParams checkParams = baseApiService.getClass().getAnnotation(CheckParams.class);
+        List<String> nullList = null;
+        if (checkParams != null) {
+            String[] values = checkParams.value();
+            if (values.length > 0) {
+                nullList = new ArrayList<>(values.length);
+                for (String key : values) {
+                    String value = request.getParameter(key);
+                    if (StringUtils.isBlank(value)) {
+                        nullList.add(key);
+                    }
+                }
+            }
+        }
+        if (nullList != null && nullList.size() > 0) {
+            logger.info("调用接口:{} 参数校验不通过;参数:{} 为空",ifn,nullList);
+            result = false;
         }
         return result;
     }
