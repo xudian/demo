@@ -5,7 +5,7 @@
     
    # demo-manager
    
-    主要是提供管理段接口
+    主要是提供管理端接口
     
    # demo-task
    
