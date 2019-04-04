@@ -1,6 +1,7 @@
 package com.aladen.common;
 
 import com.aladen.base.BaseTest;
+import com.aladen.common.util.DateUtil;
 import com.aladen.service.api.base.BaseApiService;
 import com.aladen.service.api.user.UserApiImpl;
 import org.junit.Test;
@@ -27,4 +28,12 @@ public class ReflectTest extends BaseTest {
         }
 
     }
+
+    @Test
+    public void testDate() {
+        logger.info("now:{}", DateUtil.getNow());
+        logger.info("queryNow:{}", DateUtil.getQueryNow());
+        logger.info("parse:{}",DateUtil.parse("2019-04-04 15:32:16",DateUtil.NORM_DATETIME_PATTERN));
+    }
+
 }

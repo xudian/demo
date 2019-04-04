@@ -80,6 +80,15 @@ spring:
         min-idle: 0 # 连接池中的最小空闲连接
     timeout: 1000 # 连接超时时间（毫秒）
 
+  # ====================================================================
+  # mongodb config
+  # ====================================================================
+  data:
+    mongodb:
+      host: www.xujingya.xyz:27017
+      username: root
+      password: root
+      database: db_mongo
 
   # ====================================================================
   # charset config
@@ -89,6 +98,7 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+
 
 # ====================================================================
 #  token/sign check: true/false

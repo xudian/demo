@@ -1,10 +1,12 @@
 package com.aladen.service.redis.lock;
 
+import com.aladen.common.constants.RedisConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -20,11 +22,7 @@ public class RedisLock {
 
     private static Logger logger = LoggerFactory.getLogger(RedisLock.class);
 
-    private static final long DEFAULT_WAIT_TIME_OUT = 3;
-
-    private static final long DEFAULT_EXPIRE_TIME_OUT = 3;
-
-    private static final String LOCK_KEY = "lock:";
+    private static final long DEFAULT_EXPIRE_TIME_OUT = 10;
 
     private RedisTemplate redisTemplate;
 
@@ -32,16 +30,16 @@ public class RedisLock {
         this.redisTemplate = redisTemplate;
     }
 
-    public boolean lock(String key, long wait, long expire, TimeUnit seconds) {
+    public boolean lock(String key, String value, long expire, TimeUnit seconds) {
         String lockKey = generateKey(key);
         long nanoWaitForLock = seconds.toNanos(expire);
         long start = System.nanoTime();
 
         try {
             while ((System.nanoTime() - start) < nanoWaitForLock) {
-                if (redisTemplate.getConnectionFactory().getConnection().setNX(lockKey.getBytes(), new byte[0])) {
+                if (redisTemplate.getConnectionFactory().getConnection().setNX(lockKey.getBytes(), value.getBytes())) {
                     redisTemplate.expire(lockKey, expire, seconds);
-                    logger.debug("add RedisLock[{}].{}", key, Thread.currentThread());
+                    logger.info("add RedisLock[{}].{}", key, Thread.currentThread());
                     return true;
                 }
                 /**
@@ -52,8 +50,8 @@ public class RedisLock {
                 TimeUnit.MILLISECONDS.sleep(100 + new Random().nextInt(100));
             }
         } catch (Exception e) {
-            logger.error(LOCK_KEY + "{}", e.getMessage(), e);
-            unlock(key);
+            logger.error("key:{},value:{} 获取锁异常,e:{}", key, value, e);
+            unlock(key,value);
         }
         return false;
     }
@@ -61,11 +59,14 @@ public class RedisLock {
     /**
      * 释放锁
      */
-    public boolean unlock(String key) {
+    public boolean unlock(String key, String value) {
         try {
             String lockKey = generateKey(key);
             RedisConnection connection = redisTemplate.getConnectionFactory().getConnection();
-            connection.del(lockKey.getBytes());
+            // value的值一致才能删除key
+            if (Arrays.equals(connection.get(lockKey.getBytes()),value.getBytes())) {
+                connection.del(lockKey.getBytes());
+            }
             connection.close();
             return true;
         } catch (Exception e) {
@@ -74,11 +75,11 @@ public class RedisLock {
         return false;
     }
 
-    public boolean lock(String key) {
-        return lock(key,DEFAULT_WAIT_TIME_OUT,DEFAULT_EXPIRE_TIME_OUT,TimeUnit.SECONDS);
+    public boolean lock(String key,String value) {
+        return lock(key,value,DEFAULT_EXPIRE_TIME_OUT,TimeUnit.SECONDS);
     }
 
-    public String generateKey(String key){
-        return LOCK_KEY + key;
+    private String generateKey(String key){
+        return RedisConstants.LOCK_KEY + key;
     };
 }

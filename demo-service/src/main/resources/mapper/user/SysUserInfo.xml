@@ -14,12 +14,11 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="login_time" property="loginTime" />
-        <result column="logout_time" property="logoutTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, user_name, true_name, password, phone, email, user_status, create_time, update_time, login_time, logout_time
+        user_id, user_name, true_name, password, phone, email, user_status, create_time, update_time, login_time
     </sql>
 
 </mapper>

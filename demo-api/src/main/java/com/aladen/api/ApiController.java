@@ -2,6 +2,7 @@ package com.aladen.api;
 
 import com.aladen.base.BaseController;
 import com.aladen.common.annotation.CheckParams;
+import com.aladen.common.constants.RedisConstants;
 import com.aladen.common.enumconstants.RespCodeEnum;
 import com.aladen.common.exception.BusiException;
 import com.aladen.common.helper.SpringContextHolder;
@@ -66,9 +67,8 @@ public class ApiController extends BaseController {
 
     @RequestMapping(value ="{ifn}")
     @CrossOrigin(origins = "*")
-    @ResponseBody
     public JSONObject execute(@PathVariable String ifn, HttpServletRequest request) {
-        JSONObject result = new JSONObject();
+        JSONObject result;
         logger.info("==============调用接口:{} start============================",ifn);
         printParams(request);
         boolean checkToken;
@@ -137,7 +137,7 @@ public class ApiController extends BaseController {
             return result;
         }
 
-        Object tokenMsg = redisService.get(TOKEN_KEY + token);
+        Object tokenMsg = redisService.get(RedisConstants.TOKEN_KEY + token);
         if (tokenMsg == null) {
             logger.error("通过key无法查询到信息;token:{}",token);
             return result;
@@ -145,7 +145,7 @@ public class ApiController extends BaseController {
         JSONObject tokenJson = JSONObject.parseObject(tokenMsg.toString());
         String phone = tokenJson.getString("phone");
         if (StringUtils.isNotBlank(phone)) {
-            String tokenValue = String.valueOf(redisService.get(USER_KEY + phone));
+            String tokenValue = String.valueOf(redisService.get(RedisConstants.USER_KEY + phone));
             if (StringUtils.equals(token,tokenValue)) {
                 result = Boolean.TRUE;
             }

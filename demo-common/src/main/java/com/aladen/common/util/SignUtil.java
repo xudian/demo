@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,23 +28,8 @@ public class SignUtil {
         Map<String,String[]> maps = request.getParameterMap();
         StringBuffer sb = new StringBuffer();
         if (!maps.isEmpty()) {
-            for (String key : maps.keySet()) {
-                if (StringUtils.equals(key,"sign")) {
-                    continue;
-                }
-                String[] values = maps.get(key);
-                String value = null;
-                if (values == null || values.length == 0) {
-                    continue;
-                }
-                for (int i= 0;i < values.length;i++) {
-                    if (value == null) {
-                        value = values[i];
-                    } else {
-                        value = value + "," + values[i];
-                    }
-                }
-                treeMap.put(key,value);
+            for (Map.Entry<String,String[]> entry : maps.entrySet()) {
+                treeMap.put(entry.getKey(),String.join(",", Arrays.asList(entry.getValue())));
             }
         }
         if (!treeMap.isEmpty()) {

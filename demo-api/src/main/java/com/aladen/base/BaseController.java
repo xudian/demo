@@ -21,9 +21,6 @@ public abstract class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected static final String TOKEN_KEY = "token:";
-    protected static final String USER_KEY = "token:";
-
     protected void  printParams(HttpServletRequest request){
         Map<String, String[]> map = request.getParameterMap();
         if (!map.isEmpty()) {

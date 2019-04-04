@@ -8,11 +8,11 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 用户信息表
  * </p>
  *
  * @author ${author}
- * @since 2019-03-25
+ * @since 2019-04-03
  */
 public class SysUserInfo extends Model<SysUserInfo> {
 
@@ -22,7 +22,7 @@ public class SysUserInfo extends Model<SysUserInfo> {
      * 用户ID
      */
     @TableId(value = "user_id", type = IdType.AUTO)
-    private Long userId;
+    private Integer userId;
 
     /**
      * 用户名
@@ -30,7 +30,7 @@ public class SysUserInfo extends Model<SysUserInfo> {
     private String userName;
 
     /**
-     * 姓名or昵称
+     * 姓名
      */
     private String trueName;
 
@@ -50,7 +50,7 @@ public class SysUserInfo extends Model<SysUserInfo> {
     private String email;
 
     /**
-     * 状态
+     * 状态(1:启用;0:禁用)
      */
     private String userStatus;
 
@@ -69,17 +69,12 @@ public class SysUserInfo extends Model<SysUserInfo> {
      */
     private LocalDateTime loginTime;
 
-    /**
-     * 最近一次退出系统时间
-     */
-    private LocalDateTime logoutTime;
 
-
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -155,14 +150,6 @@ public class SysUserInfo extends Model<SysUserInfo> {
         this.loginTime = loginTime;
     }
 
-    public LocalDateTime getLogoutTime() {
-        return logoutTime;
-    }
-
-    public void setLogoutTime(LocalDateTime logoutTime) {
-        this.logoutTime = logoutTime;
-    }
-
     @Override
     protected Serializable pkVal() {
         return this.userId;
@@ -181,7 +168,6 @@ public class SysUserInfo extends Model<SysUserInfo> {
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         ", loginTime=" + loginTime +
-        ", logoutTime=" + logoutTime +
         "}";
     }
 }
