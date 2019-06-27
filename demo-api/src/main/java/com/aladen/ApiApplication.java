@@ -1,5 +1,6 @@
 package com.aladen;
 
+import com.aladen.common.listener.MyEventListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.DependsOn;
@@ -17,6 +18,8 @@ import org.springframework.context.annotation.DependsOn;
 public class ApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication application = new SpringApplication(ApiApplication.class);
+        application.addListeners(new MyEventListener());
+        application.run(args);
     }
 }

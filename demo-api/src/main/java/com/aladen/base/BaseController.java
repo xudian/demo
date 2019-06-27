@@ -21,6 +21,9 @@ public abstract class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    protected String key_tokenOpen = "api.token-open";
+    protected String key_signOpen = "api.sign-open";
+
     protected void  printParams(HttpServletRequest request){
         Map<String, String[]> map = request.getParameterMap();
         if (!map.isEmpty()) {

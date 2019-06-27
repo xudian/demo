@@ -6,7 +6,7 @@ import com.aladen.common.constants.RedisConstants;
 import com.aladen.common.enumconstants.RespCodeEnum;
 import com.aladen.common.exception.BusiException;
 import com.aladen.common.helper.SpringContextHolder;
-import com.aladen.common.properties.ApiProperties;
+import com.aladen.common.util.EnvironmentUtil;
 import com.aladen.common.util.ResponseModel;
 import com.aladen.service.api.base.BaseApiService;
 import com.aladen.service.redis.RedisService;
@@ -14,7 +14,10 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -34,8 +37,6 @@ import java.util.Set;
 @RequestMapping("api")
 public class ApiController extends BaseController {
 
-    @Autowired
-    private ApiProperties apiProperties;
 
     @Autowired
     private RedisService redisService;
@@ -72,7 +73,7 @@ public class ApiController extends BaseController {
         logger.info("==============调用接口:{} start============================",ifn);
         printParams(request);
         boolean checkToken;
-        if (apiProperties.isTokenOpen()) {
+        if (Boolean.valueOf(EnvironmentUtil.getProperty(key_tokenOpen))) {
             if (isTokenAllow(ifn)) {
                 checkToken = Boolean.TRUE;
             } else {
@@ -86,7 +87,7 @@ public class ApiController extends BaseController {
             try {
                 BaseApiService baseApiService = SpringContextHolder.getBean(ifn);
                 boolean signFlag = Boolean.TRUE;
-                if (isSignAllow(ifn) || !apiProperties.isSignOpen()) {
+                if (isSignAllow(ifn) || !Boolean.valueOf(EnvironmentUtil.getProperty(key_signOpen))) {
                     signFlag = Boolean.FALSE;
                 }
                 // 注解参数校验
