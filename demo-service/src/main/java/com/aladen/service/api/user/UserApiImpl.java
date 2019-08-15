@@ -5,15 +5,10 @@ import com.aladen.service.api.base.BaseApiService;
 import com.aladen.service.user.ISysUserInfoService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * @Title: UserApiImpl
@@ -29,8 +24,8 @@ public class UserApiImpl extends BaseApiService {
     @Autowired
     private ISysUserInfoService userInfoService;
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+//    @Autowired
+//    private MongoTemplate mongoTemplate;
 
 
     @Override
@@ -45,7 +40,7 @@ public class UserApiImpl extends BaseApiService {
         boolean saveFlag = userInfoService.save(userInfo);
         logger.info("保存数据成功;saveFlag:{}",saveFlag);
 
-        mongoTemplate.save(userInfo,"sysUserInfo");
+        /*mongoTemplate.save(userInfo,"sysUserInfo");
         Query query = new Query(Criteria.where("userName").is(userInfo.getUserName()));
 
         List<SysUserInfo> list = mongoTemplate.find(query,SysUserInfo.class);
@@ -53,7 +48,7 @@ public class UserApiImpl extends BaseApiService {
             for (SysUserInfo user : list) {
                 logger.info("---------------userId:{},date:{}",user.getUserId(), user.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             }
-        }
+        }*/
         return result;
     }
 }
