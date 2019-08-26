@@ -1,8 +1,8 @@
 package com.aladen.service.kafka.consumer;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -33,5 +33,17 @@ public class ConsumerService {
         logger.info("offset:{}", record.offset());
         logger.info("value:{}", record.value());
         ack.acknowledge();
+    }
+
+    @KafkaListener(topics = {"batch-demo"}, groupId = "batch-id", containerFactory = "kafkaListenerContainerFactory")
+    public void batchConsumer(ConsumerRecords<String,String> records, Acknowledgment ack) {
+        if (!records.isEmpty()) {
+            for (ConsumerRecord record : records) {
+                logger.info("offset:{};value:{}", record.offset(), record.value());
+                if (record.offset() % 2 == 0) {
+                    ack.acknowledge();
+                }
+            }
+        }
     }
 }

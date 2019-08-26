@@ -26,7 +26,7 @@ public class KafkaConsumerConfig {
         configMap.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configMap.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,"false");
-
+        configMap.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Constant.BATCH_POLL_SIZE);
         return new DefaultKafkaConsumerFactory(configMap);
     }
 
@@ -35,6 +35,7 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String,String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+        factory.setBatchListener(Boolean.TRUE);
         return factory;
     }
 }
