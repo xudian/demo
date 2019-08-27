@@ -35,7 +35,7 @@ public class ConsumerService {
         ack.acknowledge();
     }
 
-    @KafkaListener(topics = {"batch-demo"}, groupId = "batch-id", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = {"batch-demo"}, groupId = "batch-id", containerFactory = "kafkaListenerContainerFactoryBatch")
     public void batchConsumer(ConsumerRecords<String,String> records, Acknowledgment ack) {
         if (!records.isEmpty()) {
             for (ConsumerRecord record : records) {
