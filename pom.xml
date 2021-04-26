@@ -40,7 +40,7 @@
         <httpcomponents.version>4.4.10</httpcomponents.version>
         <httpclient.version>4.5.6</httpclient.version>
         <commons.pool2.version>2.6.0</commons.pool2.version>
-        <commons.io.version>2.6</commons.io.version>
+        <commons.io.version>2.7</commons.io.version>
         <nacos.config.version>0.9.0.RELEASE</nacos.config.version>
     </properties>
 
